@@ -2,11 +2,20 @@
     @if($getRecord()->approvalStatus)
         <p class="px-3">
             <small>
-                {{ $getRecord()->approvalStatus->status }} {{ __('filament-approvals::approvals.status_column.approval_by_prefix') }}
-                @if ($getRecord()->lastApproval)
-                    {{ $getRecord()->lastApproval->approver_name }}
+                @if ($getRecord()->isApprovalCompleted())
+                    {{ __('filament-approvals::approvals.status_column.approval_complete') }} {{ __('filament-approvals::approvals.status_column.approval_by_prefix') }}
+                    @if ($getRecord()->lastApproval)
+                        {{ $getRecord()->lastApproval->approver_name }}
+                    @else
+                        {{ $getRecord()->createdBy()->name }}
+                    @endif
                 @else
-                    {{ $getRecord()->createdBy()->name }}
+                    {{ $getRecord()->approvalStatus->status }} {{ __('filament-approvals::approvals.status_column.approval_by_prefix') }}
+                    @if ($getRecord()->nextApprover)
+                        {{ $getRecord()->nextApprover->name }}
+                    @else
+                        {{ $getRecord()->createdBy()->name }}
+                    @endif
                 @endif
             </small>
         </p>
