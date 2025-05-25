@@ -5,7 +5,7 @@
                 <img src="{{ Filament\Facades\Filament::getUserAvatarUrl($a->user) }}"
                      class="h-6 w-6 flex-none rounded-full bg-gray-800" alt="Avatar" />
                 <h3 class="flex truncate text-sm font-semibold leading-6 text-gray-500">
-                    {{ $a->user->getFilamentName() }}
+                    {{ $a->user->name }}
                 </h3>
                 <time class="flex-none text-xs text-gray-500">{{ $a->created_at->diffForHumans() }} - {{ $a->created_at }}</time>
                 <div class="flex gap-x-4 ml-auto">
