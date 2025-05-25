@@ -149,6 +149,164 @@ Just like that, you are good to go, make some moneyyyyy🤑
 
 To add more approval flows(models), repeat the steps 3-6
 
+## 🎨 Customization & Publishing
+
+This package provides extensive customization options by publishing various components. You can publish and customize configuration files, views, Filament resources, form/table components, translations, and more.
+
+### Quick Publishing
+
+Use the custom publish command for an interactive publishing experience:
+
+```bash
+php artisan approvals:publish
+```
+
+This will show you an interactive menu to choose what you want to publish.
+
+### Publishing Specific Components
+
+You can also publish specific components using command options:
+
+#### Configuration File
+```bash
+php artisan approvals:publish --config
+```
+This publishes the configuration file to `config/approvals.php` where you can customize:
+- Role model configuration
+- Navigation settings (icon, sort order, visibility)
+- Comment settings for approvals and rejections
+
+#### View Files
+```bash
+php artisan approvals:publish --views
+```
+This publishes all Blade view files to `resources/views/vendor/filament-approvals/` for complete UI customization:
+- `tables/columns/approval-status-column.blade.php` - Customize the approval status display
+- `tables/columns/approval-status-column-action-view.blade.php` - Customize approval history view
+
+#### Filament Resources
+```bash
+php artisan approvals:publish --resources
+```
+This publishes Filament resources to `app/Filament/Resources/` allowing you to:
+- Customize the ApprovalFlowResource completely
+- Modify forms, tables, and pages
+- Add custom validation and business logic
+
+#### Form & Table Components
+```bash
+php artisan approvals:publish --components
+```
+This publishes reusable components to `app/Forms/Approvals/` and `app/Tables/Approvals/`:
+- Custom approval action forms
+- Specialized table columns and actions
+- Approval workflow components
+
+#### Translation Files
+```bash
+php artisan approvals:publish --translations
+```
+This publishes language files to `resources/lang/vendor/filament-approvals/` for localization:
+- Customize all text and messages
+- Add support for additional languages
+- Modify approval status terminology
+
+#### Development Stubs
+```bash
+php artisan approvals:publish --stubs
+```
+This publishes stub files to `stubs/filament-approvals/` for development and extension.
+
+#### Publish Everything
+```bash
+php artisan approvals:publish --all
+```
+This publishes all customizable files at once.
+
+### Configuration Options
+
+After publishing the config file, you can customize these settings in `config/approvals.php`:
+
+```php
+return [
+    // Specify your role model (must be compatible with spatie/laravel-permission)
+    "role_model" => App\Models\Role::class,
+    
+    // Navigation configuration
+    "navigation" => [
+        "should_register_navigation" => true,
+        "icon" => "heroicon-o-clipboard-document-check",
+        "sort" => 1
+    ],
+    
+    // Comment settings
+    "enable_approval_comments" => false, // Allow comments when approving
+    "enable_rejection_comments" => true, // Allow comments when rejecting
+];
+```
+
+### Customizing Views
+
+After publishing views, you can completely customize the appearance:
+
+**Approval Status Column (`resources/views/vendor/filament-approvals/tables/columns/approval-status-column.blade.php`)**:
+- Modify status display logic
+- Customize styling and colors
+- Add additional status information
+
+**Approval History View (`resources/views/vendor/filament-approvals/tables/columns/approval-status-column-action-view.blade.php`)**:
+- Customize approval history display
+- Modify user avatar and information layout
+- Enhance comment formatting
+
+### Extending Filament Resources
+
+When you publish the Filament resources, you gain full control:
+
+```php
+// In your published ApprovalFlowResource
+class ApprovalFlowResource extends Resource
+{
+    // Add custom form fields
+    public static function form(Form $form): Form
+    {
+        return $form->schema([
+            // ... existing fields ...
+            
+            // Add your custom fields
+            TextInput::make('custom_field')
+                ->label('Custom Configuration'),
+        ]);
+    }
+    
+    // Customize table columns
+    public static function table(Table $table): Table
+    {
+        return $table->columns([
+            // ... existing columns ...
+            
+            // Add custom columns
+            TextColumn::make('custom_data')
+                ->label('Custom Information'),
+        ]);
+    }
+}
+```
+
+### Advanced Customization Tips
+
+1. **Custom Approval Actions**: Extend the published form/table components to add custom approval logic
+2. **Styling**: Use the published views to match your application's design system
+3. **Localization**: Publish translations and add your language files
+4. **Business Logic**: Modify the published resources to add organization-specific workflows
+
+### Best Practices
+
+- Always backup your customizations before updating the package
+- Use version control to track your customized files
+- Test customizations thoroughly in a development environment
+- Document your customizations for team members
+
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.

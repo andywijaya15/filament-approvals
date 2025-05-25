@@ -14,6 +14,7 @@ use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use EightyNine\Approvals\Commands\ApprovalCommand;
+use EightyNine\Approvals\Commands\PublishCommand;
 use EightyNine\Approvals\Testing\TestsApproval;
 
 class ApprovalServiceProvider extends PackageServiceProvider
@@ -81,11 +82,37 @@ class ApprovalServiceProvider extends PackageServiceProvider
 
         // Handle Stubs
         if (app()->runningInConsole()) {
+            // Publish configuration file
+            $this->publishes([
+                __DIR__ . '/../config/approvals.php' => config_path('approvals.php'),
+            ], 'filament-approvals-config');
+
             foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
                 $this->publishes([
                     $file->getRealPath() => base_path("stubs/filament-approvals/{$file->getFilename()}"),
                 ], 'filament-approvals-stubs');
             }
+
+            // Publish Views for customization
+            $this->publishes([
+                __DIR__ . '/../resources/views' => resource_path('views/vendor/filament-approvals'),
+            ], 'filament-approvals-views');
+
+            // Publish Filament Resources for customization
+            $this->publishes([
+                __DIR__ . '/Filament/Resources' => app_path('Filament/Resources'),
+            ], 'filament-approvals-resources');
+
+            // Publish Forms and Tables for customization
+            $this->publishes([
+                __DIR__ . '/Forms' => app_path('Forms/Approvals'),
+                __DIR__ . '/Tables' => app_path('Tables/Approvals'),
+            ], 'filament-approvals-components');
+
+            // Publish translations for customization
+            $this->publishes([
+                __DIR__ . '/../resources/lang' => resource_path('lang/vendor/filament-approvals'),
+            ], 'filament-approvals-translations');
         }
 
         // Testing
@@ -116,6 +143,7 @@ class ApprovalServiceProvider extends PackageServiceProvider
     {
         return [
             ApprovalCommand::class,
+            PublishCommand::class,
         ];
     }
 
