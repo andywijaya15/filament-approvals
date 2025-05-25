@@ -54,7 +54,7 @@ class DiscardAction extends Action
      */
     private function discardModel(): Closure
     {
-        return function (array $data, ApprovableModel $record): bool {
+        return function (array $data, Model $record): bool {
             $record->discard(null, Auth::user());
             Notification::make()
                 ->title('Discarded successfully')
