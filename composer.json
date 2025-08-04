@@ -19,11 +19,17 @@
             "role": "Developer"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/andywijaya15/laravel-process-approval"
+        }
+    ],
     "require": {
         "php": "^8.2",
         "filament/filament": "^3.0",
         "illuminate/contracts": "^10.0|^11.0|^12.0",
-        "ringlesoft/laravel-process-approval": "^1.0",
+        "ringlesoft/laravel-process-approval": "dev-master",
         "spatie/laravel-package-tools": "^1.15.0",
         "spatie/laravel-permission": "^6.1"
     },
