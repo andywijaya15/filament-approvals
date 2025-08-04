@@ -35,7 +35,7 @@ trait Approvable
         return true;
     }
 
-    public function getNextApprover()
+    public function getNextApproverAttribute()
     {
         return $this->getNextApprovers()->first() ?? null;
     }
