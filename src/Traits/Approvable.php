@@ -34,4 +34,9 @@ trait Approvable
         // Write logic to be executed when the approval process is completed
         return true;
     }
+
+    public function nextApprover()
+    {
+        return $this->getNextApprovers()->first() ?? null;
+    }
 }
