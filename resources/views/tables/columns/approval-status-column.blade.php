@@ -11,8 +11,8 @@
                     @endif
                 @else
                     {{ $getRecord()->approvalStatus->status }} {{ __('filament-approvals::approvals.status_column.approval_by_prefix') }}
-                    @if ($getRecord()->nextApprover)
-                        {{ $getRecord()->nextApprover->name }}
+                    @if ($getRecord()->getNextApprovers()->first())
+                        {{ $getRecord()->getNextApprovers()->first()->name }}
                     @else
                         {{ $getRecord()->createdBy()->name }}
                     @endif
